@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Preview with Image Overlay</title>
+    <!-- Include Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Apply a default size for the video element */
+        #camera-container {
+            position: relative;
+            width: 100%;
+            height: auto;
+            max-width: 100%; /* Ensure it doesn't exceed the video's original dimensions */
+            display: block; /* Remove any default inline styles */
+        }
+
+        #camera-preview {
+            width: 100%;
+            height: auto;
+            max-width: 100%; /* Ensure it doesn't exceed the video's original dimensions */
+            display: block; /* Remove any default inline styles */
+        }
+
+        /* Media query for mobile devices (portrait and landscape) */
+        @media (max-width: 767px) {
+            #camera-container {
+                width: 100%;
+                height: 100vh; /* Full viewport height */
+            }
+
+            #camera-preview {
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* Ensure the video covers the entire viewport */
+            }
+        }
+
+        /* Style for the image overlay */
+        #image-overlay {
+            position: absolute;
+            top: 50%; /* Center the image vertically */
+            left: 50%; /* Center the image horizontally */
+            transform: translate(-50%, -50%); /* Center the image both vertically and horizontally */
+            width: 50%; /* Adjust the width as needed (e.g., 50% for half the size) */
+            max-width: 200px; /* Limit the maximum width */
+            height: auto; /* Maintain the aspect ratio */
+            opacity: 0.5; /* Adjust the opacity as needed */
+            pointer-events: none; /* Allows interaction with the video beneath */
+        }
+
+        /* Style for the buttons */
+        .overlay-button {
+            position: absolute;
+            background-color: white; /* Button background color */
+            color: #007BFF; /* Button text color */
+            border: none;
+            border-radius: 10px; /* Make it slightly rounded */
+            padding: 10px; /* Adjust padding as needed */
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Style for the call button */
+        #call-button {
+            top: 58%;
+            left: 24%;
+        }
+
+        /* Style for the message button */
+        #message-button {
+            top: 58%;
+            right: 24%;
+        }
+
+        /* Style for the Font Awesome icons */
+        .fa {
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div id="camera-container">
+        <video id="camera-preview" autoplay></video>
+        <img id="image-overlay" src="visit.png" alt="Image Overlay">
+        <button id="call-button" class="overlay-button" onclick="makeCall()">
+            <i class="fas fa-phone"></i>
+            
+            <span>+919880889024</span>
+        </button>
+        <button id="message-button" class="overlay-button" onclick="sendMessage()">
+            <i class="fas fa-envelope"></i>
+            
+            <span>+1234567890</span>
+        </button>
+    </div>
+
+    <!-- Include Font Awesome JavaScript (for icons) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    
+    <script>
+        // Check if the browser supports getUserMedia
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    // Set the video element's source to the camera stream
+                    var videoElement = document.getElementById('camera-preview');
+                    videoElement.srcObject = stream;
+                })
+                .catch(function (error) {
+                    console.error('Error accessing the camera:', error);
+                });
+        } else {
+            console.error('getUserMedia is not supported in this browser');
+        }
+
+        // Function to make a call (Replace 'your-phone-number' with the actual phone number)
+        function makeCall() {
+            window.location.href = 'tel:+1234567890'; // Replace with your phone number
+        }
+
+        // Function to send a message (Replace 'your-phone-number' with the actual phone number)
+        function sendMessage() {
+            window.location.href = 'sms:+1234567890'; // Replace with your phone number
+        }
+    </script>
+</body>
+</html>
